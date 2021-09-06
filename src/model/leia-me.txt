@@ -1,0 +1,2 @@
+Model -> É responsável por fornecer/trabalhar 
+          com os dados para minha aplicação.
