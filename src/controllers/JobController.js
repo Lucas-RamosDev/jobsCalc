@@ -4,29 +4,6 @@ const Profile = require('../model/Profile');
 
 module.exports = {
 
-  index(req, res) {
-
-    const jobs = Job.get()
-    const profile = Profile.get()
-
-    const updatedJobs = jobs.map((job) => {
-      
-      // ajustes no job
-      const remaining = JobUtils.remainingDays(job)
-      const status = remaining <= 0 ? 'done' : 'progress' // define o status do prjeto mediante aos dias para entrega
-  
-      return { // fazendo desta forma o js pega o objeto dentro do array jobs e acrescenta o "remaining", "status" e "budget" sem precisar recria-lo novamente.
-        ...job, //espalha todos os jobs aqui dentro
-        remaining,
-        status,
-        budget: JobUtils.calculateBudget(job, profile["value-hour"] )
-      }
-    })
-  
-    return res.render("index", { jobs: updatedJobs })
-
-  },
-
   create(req, res) {
     return res.render("job")
   },
@@ -44,13 +21,13 @@ module.exports = {
 
     //"req.body" -> esta pegando as informações através do POST vindo do form "form-job"
     //"req.boby" = { name: 'Lucas Ramos', 'daily-hours': '2', 'total-hours': '1' }
-    jobs.push({
+    Job.create({
       id: lastId + 1,
       name: req.body.name, 
       "daily-hours": req.body["daily-hours"], 
       "total-hours": req.body["total-hours"],
       created_at: Date.now() // atribuindo data de hoje em milesegundos
-    }) 
+    });
 
     //console.log(lastId) 
     return res.redirect('/')

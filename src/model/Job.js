@@ -29,10 +29,12 @@ module.exports = {
   },
 
   delete(id) {
-
     // Filter -> vai filtrar o array, e vai procurar algo para tirar.
     data = data.filter(job => Number(job.id) !== Number(id))
+  },
 
+  create(newJob) {
+    data.push(newJob)
   }
 
 }
