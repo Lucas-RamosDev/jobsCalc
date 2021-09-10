@@ -7,7 +7,7 @@ module.exports = {
 
   async index(req, res) {
 
-    const jobs = Job.get()
+    const jobs = await Job.get()
     const profile = await Profile.get() // - neste caso precisamos usar "await" pq nosso "get()" virou await (no arquivo ./model/Profile)
 
     let statusCount = {
